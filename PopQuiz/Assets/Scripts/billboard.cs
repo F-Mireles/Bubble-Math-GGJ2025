@@ -9,4 +9,14 @@ public class billboard : MonoBehaviour
     void LateUpdate() {
         transform.LookAt(transform.position + cam.forward);
     }
+    void OnMouseDown()
+    {
+        GetComponent<billboard>().enabled = false; // Disable billboard effect
+    }
+
+    void OnMouseUp()
+    {
+        GetComponent<billboard>().enabled = true; // Re-enable billboard effect
+    }
+
 }

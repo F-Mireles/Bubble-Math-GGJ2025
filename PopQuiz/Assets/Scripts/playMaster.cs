@@ -16,11 +16,18 @@ public class playMaster : MonoBehaviour
     void SpawnObject()
     {
         // Generate random position within screen bounds
+        //Vector3 randomPosition = new Vector3(
+        //    Random.Range(20.0f, 480.0f), //Screen.width),
+        //    Random.Range(200.0f, 800.0f), //Screen.height),
+        //    10f //Camera.main.nearClipPlane
+        //);
         Vector3 randomPosition = new Vector3(
-            Random.Range(20.0f, 480.0f), //Screen.width),
-            Random.Range(200.0f, 800.0f), //Screen.height),
-            10f //Camera.main.nearClipPlane
-        );
+    Random.Range(20.0f, 480.0f),
+    Random.Range(200.0f, 800.0f),
+    10f // Consistent Z-depth
+);
+
+
 
         // Convert screen position to world position
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(randomPosition);
