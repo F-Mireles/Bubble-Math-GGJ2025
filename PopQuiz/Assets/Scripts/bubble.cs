@@ -14,20 +14,19 @@ public class main : MonoBehaviour
     // Ambient movement options
     public float floatSpeed = 1.0f;
     public float floatRange = 0.5f;
-    public float moveSpeed = 0.5f;
-    public float moveRange = 1.0f;
+
+    private Vector3 startPosition; // Used for initial instantiation; survey play field
+    private bool isDragging = false;
 
     public GameObject BigBubble;
-    private bool isMerging = false;
     Vector3 mousePosition;
-    
+
     // Display
     //public displayed billboard text
     //private find the canvas and text element always on this GameObject and feed it numbers to display
 
     //public size of the bubble relative to its number
-    private Vector3 startPosition; // Used for initial instantiation; survey play field
-
+ 
     void Start()
     {
         startPosition = transform.position;
@@ -47,13 +46,11 @@ public class main : MonoBehaviour
     }
     void Update(){
          // Floating effect
-        float newY = startPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatRange;
-        //transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-
-        // Random movement
-        float newX = startPosition.x + Mathf.PerlinNoise(Time.time * moveSpeed, 0) * moveRange - moveRange / 2;
-        float newZ = startPosition.z + Mathf.PerlinNoise(0, Time.time * moveSpeed) * moveRange - moveRange / 2;
-        //transform.position = new Vector3(newX, newY, newZ);
+         if(!isDragging)
+        {
+             float newY = startPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatRange;
+             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+         }
         
     }
 
@@ -76,9 +73,6 @@ public class main : MonoBehaviour
     {
         // Add the numbers of both bubbles
         number += otherBubble.number;
-        //Instantiate(BigBubble, transform.position, Quaternion.identity);
-        //BigBubble.SetActive(true);
-        //BigBubble.GetComponentInChildren<TextMeshProUGUI>().text = number.ToString();
         // Update the UI to display the new number
         TextMeshProUGUI textObject = GetComponentInChildren<TextMeshProUGUI>();
         if (textObject != null)
@@ -104,9 +98,15 @@ public class main : MonoBehaviour
 
     void OnMouseDrag()
     {
-        
+        isDragging = true;
         // Move the object to the calculated world position
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
+    }
+
+    void OnMouseUp()
+    {
+        isDragging = false;
+        startPosition = transform.position; // Update the floating origin after dragging
     }
 
 }

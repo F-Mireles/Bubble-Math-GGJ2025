@@ -15,23 +15,20 @@ public class playMaster : MonoBehaviour
 
     void SpawnObject()
     {
-        // Generate random position within screen bounds
-        //Vector3 randomPosition = new Vector3(
-        //    Random.Range(20.0f, 480.0f), //Screen.width),
-        //    Random.Range(200.0f, 800.0f), //Screen.height),
-        //    10f //Camera.main.nearClipPlane
-        //);
-        Vector3 randomPosition = new Vector3(
-            Random.Range(20.0f, 480.0f),
-            Random.Range(200.0f, 800.0f),
-            10f // Consistent Z-depth
-        );
+        // Get the camera's viewport dimensions
+        Camera cam = Camera.main;
+        float padding = 0.05f; // 5% padding on each side
 
-        // Convert screen position to world position
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(randomPosition);
+        // Randomize position within the camera's viewport
+        float randomX = Random.Range(0f + padding, 1f - padding); // Keep within 10% to 90% of the screen width
+        float randomY = Random.Range(0f + padding, 1f - padding); // Keep within 10% to 90% of the screen height
 
-        // Instantiate the prefab at the random world position
+        // Convert viewport coordinates to world space
+        Vector3 viewportPosition = new Vector3(randomX, randomY, cam.nearClipPlane + 10f);
+        Vector3 worldPosition = cam.ViewportToWorldPoint(viewportPosition);
+
+        // Instantiate the prefab at the calculated position
         Instantiate(prefab, worldPosition, Quaternion.identity);
-        
     }
+
 }
