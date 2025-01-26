@@ -22,12 +22,10 @@ public class playMaster : MonoBehaviour
         //    10f //Camera.main.nearClipPlane
         //);
         Vector3 randomPosition = new Vector3(
-    Random.Range(20.0f, 480.0f),
-    Random.Range(200.0f, 800.0f),
-    10f // Consistent Z-depth
-);
-
-
+            Random.Range(20.0f, 480.0f),
+            Random.Range(200.0f, 800.0f),
+            10f // Consistent Z-depth
+        );
 
         // Convert screen position to world position
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(randomPosition);
@@ -35,6 +33,5 @@ public class playMaster : MonoBehaviour
         // Instantiate the prefab at the random world position
         Instantiate(prefab, worldPosition, Quaternion.identity);
         
-        //Component[] thing = prefab.GetComponents(typeof(Component));
     }
 }
